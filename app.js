@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const { result } = require('lodash');
 
 
 
@@ -41,6 +42,26 @@ app.use(express.static('public'));
 //     next();
 // };
 //The importance use of next in middleware else the function would get stacked and not move to the next event handler
+
+//Getting data and saving data to database
+app.get('/add-blog', (req, res, ) => {
+    const blog = new Blog ({
+        title: 'New blog post',
+        snippet: "about my new blog post",
+        body: "more about my new blog post you get it right",
+    });
+    //Methods to use on the new blog post the instance of Blog model
+
+    blog.save() 
+    .then((result) => {
+        res.send(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        
+    })
+
+})
 
 
 app.get('/', (req, res) => {
