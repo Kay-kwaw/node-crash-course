@@ -28,6 +28,6 @@ const blogSchema = new Schema ({
 //creating a model based on the schema
 //Basically blogs collection
 
-const Blog = mongoose.model('Blog',blogSchema);
+const Blog = mongoose.model('Blog', blogSchema);
 
 module.export = Blog;

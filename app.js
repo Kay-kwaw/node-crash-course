@@ -16,7 +16,8 @@ const { result } = require('lodash');
 const app = express();
 
 //Connect to mongobd
-const dbURI = "mongodb+srv://kwaw%5Fkumi:Miezah%40%31@nodetril.n2duswe.mongodb.net/?retryWrites=true&w=majority";
+// const dbURI = "mongodb+srv://kwaw%5Fkumi:Miezah%40%31@nodetril.n2duswe.mongodb.net/?retryWrites=true&w=majority"
+const dbURI="mongodb+srv://kwaw%5Fkumi:Miezah%40%31@nodetril.n2duswe.mongodb.net/?retryWrites=true&w=majority";
 // this is an ansync task
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
    .then((result) => app.listen(3000))
@@ -44,7 +45,7 @@ app.use(express.static('public'));
 //The importance use of next in middleware else the function would get stacked and not move to the next event handler
 
 //Getting data and saving data to database
-app.get('/add-blog', (req, res, ) => {
+app.get('./add-blog', (req, res, ) => {
     const blog = new Blog ({
         title: 'New blog post',
         snippet: "about my new blog post",
@@ -56,10 +57,10 @@ app.get('/add-blog', (req, res, ) => {
     .then((result) => {
         res.send(result);
     })
-    .catch((error) => {
+    .catch((error) => { 
         console.log(error);
         
-    })
+    });
 
 })
 
