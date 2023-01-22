@@ -74,26 +74,38 @@ app.get('/all-blogs', (req, res) => {
    
 })
 
-
+//routes
 app.get('/', (req, res) => {
     // res.send("<p><strong>home page</strong></p>");
     // res.sendFile('./views/index.html', {root: __dirname});
-    const blogs = [
-           {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
-           {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
-           {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
-    ];
-    res.render("index", { title: 'Home page', blogs});
+    res.redirect('/blogs');
+    // const blogs = [
+    //        {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
+    //        {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
+    //        {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
+    // ];
+    // res.render("index", { title: 'Home page', blogs});
 });
 app.get('/about', (req, res) => {
     // res.send("<p><strong>About-Us Ony3 gbemi</strong></p>");
     // 
     res.render("about", { title: 'About page'});
 });
+//blogs routes
+app.get('/blogs', (req, res) => {
+    Blog.find().sort({createdAt: -1})
+    .then(result =>{ res.render('index', {title: 'All blogs', blog: result})
+})
+.catch(error => {
+    console.log(error);
+})
+
+})
 
 app.get('/blogs/create', (req, res) => {
     res.render( "create",{ title: 'Create page'});
 });
+
 
 // redirects 
 app.get('/about-us', (req, res) => {
