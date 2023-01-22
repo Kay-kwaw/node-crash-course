@@ -17,7 +17,7 @@ const app = express();
 const dbURI = "mongodb+srv://kwaw%5Fkumi:Miezah%40%31@nodetril.n2duswe.mongodb.net/?retryWrites=true&w=majority";
 
 // this is an ansync task
-mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(dbURI, {useNewUrlParser: true,  }) //useUnifiedTopology: true,
    .then((result) => app.listen(3000))
    .catch((err) => console.log(err));
 //Register view engine
@@ -31,7 +31,9 @@ app.set('view engine', 'ejs');
 //Middleware and static files(static files refers to images, css files etc)(middleware and express app)
 app.use(express.static('public'));
 //Morgan middleware HTTP request logger middleware for node.js.
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
+//The express.urlencoded() function is a built-in middleware function in Express. It parses incoming requests with urlencoded payloads and is based on body-parser.
+app.use(express.urlencoded());
 //Middleware code
 // app.use((req, res, next) => {
 //     console.log("new request made");
@@ -84,7 +86,7 @@ app.get('/', (req, res) => {
     //        {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
     //        {title: "Youshi finds eggs", snippet: 'Lorem ipsum dolor sit amet, consectetur'},
     // ];
-    // res.render("index", { title: 'Home page', blogs});
+    res.render("index", { title: 'Home page', blogs});
 });
 app.get('/about', (req, res) => {
     // res.send("<p><strong>About-Us Ony3 gbemi</strong></p>");
@@ -93,14 +95,30 @@ app.get('/about', (req, res) => {
 });
 //blogs routes
 app.get('/blogs', (req, res) => {
+    // descending order 
     Blog.find().sort({createdAt: -1})
-    .then(result =>{ res.render('index', {title: 'All blogs', blog: result})
+.then((result) => {
+  res.render('index', { title: 'All Blogs', blogs: result }); 
 })
 .catch(error => {
     console.log(error);
 })
 
-})
+});
+//POST REQUEST
+
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body);
+
+    blog.save()
+    .then((result) => {
+      res.redirect('/blogs');
+    })
+    .catch(error => {
+        console.log(error);
+    });
+});
+
 
 app.get('/blogs/create', (req, res) => {
     res.render( "create",{ title: 'Create page'});
