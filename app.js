@@ -1,23 +1,21 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const { result } = require('lodash');
-
-
-
-
+// const { result } = require('lodash');
+const Blog = require('./models/blog');
 
 // Setting Express Application
 //Express is a minimal and flexible Node.js
 // web application framework that provides a robust set of features for web and mobile applications.
 
-//Engine Views is responsible for create html from your views 
+//Engine Views or view engine is responsible for create html from your views 
 // Views is a mixed up html with a programming language
 const app = express();
 
 //Connect to mongobd
-// const dbURI = "mongodb+srv://kwaw%5Fkumi:Miezah%40%31@nodetril.n2duswe.mongodb.net/?retryWrites=true&w=majority"
-const dbURI="mongodb+srv://kwaw%5Fkumi:Miezah%40%31@nodetril.n2duswe.mongodb.net/?retryWrites=true&w=majority";
+//Using mongoose to connect to mongodb
+const dbURI = "mongodb+srv://kwaw%5Fkumi:Miezah%40%31@nodetril.n2duswe.mongodb.net/?retryWrites=true&w=majority";
+
 // this is an ansync task
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
    .then((result) => app.listen(3000))
@@ -29,7 +27,7 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 app.set('view engine', 'ejs');
 
 //Listening to requests?// ALL these are get handlers so what this code does is if we fire a function it goes through the request handler and fires back 404 if not found
-// app.listen(3000);
+//  app.listen(3000);
 //Middleware and static files(static files refers to images, css files etc)(middleware and express app)
 app.use(express.static('public'));
 //Morgan middleware HTTP request logger middleware for node.js.
@@ -45,14 +43,13 @@ app.use(express.static('public'));
 //The importance use of next in middleware else the function would get stacked and not move to the next event handler
 
 //Getting data and saving data to database
-app.get('./add-blog', (req, res, ) => {
+app.get('/add-blog', (req, res, ) => {
     const blog = new Blog ({
         title: 'New blog post',
         snippet: "about my new blog post",
         body: "more about my new blog post you get it right",
     });
     //Methods to use on the new blog post the instance of Blog model
-
     blog.save() 
     .then((result) => {
         res.send(result);
@@ -62,6 +59,19 @@ app.get('./add-blog', (req, res, ) => {
         
     });
 
+});
+
+// get all blog posts from the database
+//NB its an async function so might some time
+app.get('/all-blogs', (req, res) => {
+    Blog.find()
+    .then((result) => {
+        res.send(result);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+   
 })
 
 

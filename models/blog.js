@@ -23,11 +23,11 @@ const blogSchema = new Schema ({
         required:true,
     }
 },{timestamps: true})
+//read about timestamps (kwawkumi)
 
-
-//creating a model based on the schema
+//creating a model based on the schema to store in our block collection
 //Basically blogs collection
-
+//this model takes in two parameters which the model name(singluar) and the schema name
 const Blog = mongoose.model('Blog', blogSchema);
 
-module.export = Blog;
+module.exports = Blog;
