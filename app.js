@@ -135,7 +135,7 @@ app.get('/blogs/:id', (req, res) => {
     })
     .catch( err => {
         console.log(err)
-    })
+    });
 })
 
 
