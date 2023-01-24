@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 // const { result } = require('lodash');
 const Blog = require('./models/blog');
+const { render } = require('ejs');
 
 // Setting Express Application
 //Express is a minimal and flexible Node.js
@@ -126,6 +127,16 @@ app.get('/blogs/create', (req, res) => {
 
 
 //Routes Parameters
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findById(id)
+    .then(result => {
+        res.render('details', {blog: result, title: 'Blog details'});
+    })
+    .catch( err => {
+        console.log(err)
+    })
+})
 
 
 // redirects 
