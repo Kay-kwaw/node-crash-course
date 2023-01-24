@@ -125,6 +125,9 @@ app.get('/blogs/create', (req, res) => {
 });
 
 
+//Routes Parameters
+
+
 // redirects 
 app.get('/about-us', (req, res) => {
     res.redirect('/about');
