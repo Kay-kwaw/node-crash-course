@@ -125,7 +125,13 @@ app.get('/blogs/create', (req, res) => {
     res.render( "create",{ title: 'Create page'});
 });
 
-
+app.delete('/blogs/:id', (req, res) =>{
+    const id = req.params.id;
+    Blog.findById(id)
+    .then((result) => {
+     res.json({redirect: '/blogs/'})
+    });
+})
 //Routes Parameters
 app.get('/blogs/:id', (req, res) => {
     const id = req.params.id;
