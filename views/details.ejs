@@ -10,8 +10,12 @@
         <div class="content">
             <p><%= blog.body %></p>
         </div>
-        <!-- <a class="delete" data-doc= "<%= blog._id %>">delete</a> -->
+        <!-- blog Id that we want to delete -->
+        <a class="delete" data-doc= "<%= blog._id %>">delete</a>
+        
     </div>
     <%- include ("./partials/footer.ejs") %>
 </body>
 </html>
+
+<!-- data-doc is an html attribute when use a hyphen when creating a new attribute in html -->
